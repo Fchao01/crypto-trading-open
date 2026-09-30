@@ -1574,11 +1574,7 @@ class ArbitrageOrchestratorV3:
                     ticker_data = {}
                     
                     # 使用订阅符号（包含基础+额外+多腿依赖），避免UI缺盘口
-                    subscription_symbols = getattr(
-                        self.monitor_config,
-                        "subscription_symbols",
-                        None
-                    ) or getattr(self.monitor_config, "get_subscription_symbols", lambda: [])()
+                    subscription_symbols = self.monitor_config_manager.get_subscription_symbols()
 
                     for exchange_name in self.monitor_config.exchanges:
                         orderbook_data[exchange_name] = {}
@@ -2067,4 +2063,3 @@ class ArbitrageOrchestratorV3:
             
         except Exception as e:
             logger.error(f"[总调度器] 更新账户余额UI失败: {e}", exc_info=True)
-

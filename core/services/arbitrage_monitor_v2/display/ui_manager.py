@@ -508,19 +508,22 @@ class UIManager:
         total_current_balance: Decimal = Decimal("0")
         total_initial_balance: Decimal = Decimal("0")
         has_snapshot = False
+        currencies_seen: set[str] = set()
         for exchange_name in sorted(self.account_balances.keys()):
             balances = self.account_balances.get(exchange_name) or []
             usdc_total: Optional[Decimal] = None
+            balance_currency: Optional[str] = None
 
             for item in balances:
                 currency = (item.get("currency") or "").upper()
-                if currency == "USDC" or currency.startswith("USDC") or currency == "USD":
+                if currency in ("USDC", "USDG", "USD") or currency.startswith("USDC"):
                     total_value = item.get("total")
                     if total_value is None:
                         free = item.get("free") or 0.0
                         used = item.get("used") or 0.0
                         total_value = free + used
                     usdc_total = Decimal(str(total_value))
+                    balance_currency = currency
                     break
 
             if usdc_total is not None:
@@ -534,20 +537,22 @@ class UIManager:
                 total_current_balance += usdc_total
                 total_initial_balance += initial
                 has_snapshot = True
+                currencies_seen.add(balance_currency or "USD")
                 pnl_str = f"{pnl_value:+,.2f}"
                 summary_parts.append(
-                    f"{exchange_name.upper()}: {usdc_total:,.2f} USDC ({pnl_str})"
+                    f"{exchange_name.upper()}: {usdc_total:,.2f} {balance_currency} ({pnl_str})"
                 )
             else:
                 summary_parts.append(f"{exchange_name.upper()}: -")
 
         summary_text = " | ".join(summary_parts)
-        if has_snapshot:
+        if has_snapshot and len(currencies_seen) == 1:
+            unit = next(iter(currencies_seen))
             summary_text = (
                 f"{summary_text} || "
-                f"初始: {total_initial_balance:,.2f} USDC | "
-                f"当前: {total_current_balance:,.2f} USDC | "
-                f"盈亏: {total_pnl:+,.2f} USDC"
+                f"初始: {total_initial_balance:,.2f} {unit} | "
+                f"当前: {total_current_balance:,.2f} {unit} | "
+                f"盈亏: {total_pnl:+,.2f} {unit}"
             )
         return summary_text
 

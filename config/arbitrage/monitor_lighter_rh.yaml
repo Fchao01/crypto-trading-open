@@ -5,6 +5,7 @@ exchanges:
   - lighter_rh
 
 symbols:
+  # 系统统一永续合约符号使用 USDC；RH 实例的保证金币种是 USDG，二者不是同一字段。
   - BTC-USDC-PERP
   - ETH-USDC-PERP
   - SOL-USDC-PERP

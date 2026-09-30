@@ -121,9 +121,9 @@ class DataReceiver:
                 # ============================================================
                 
                 # 🚀 Lighter特殊处理：使用批量订阅模式（参考EdgeX的实现）
-                if exchange == "lighter":
+                if exchange in ("lighter", "lighter_rh"):
                     # 🔥 固定 exchange 值，避免闭包变量捕获问题
-                    exchange_name = "lighter"
+                    exchange_name = exchange
                     
                     # 创建Lighter专用的统一回调（只有一个参数）
                     # 🔥 使用默认参数绑定，避免闭包捕获问题
@@ -194,7 +194,8 @@ class DataReceiver:
                     exchange_symbols = []
                     for standard_symbol in symbols:
                         try:
-                            exchange_symbol = self.symbol_converter.convert_to_exchange(standard_symbol, exchange)
+                            # 两个 Lighter 实例使用相同的合约符号规则，但保留独立交易所 ID。
+                            exchange_symbol = self.symbol_converter.convert_to_exchange(standard_symbol, "lighter")
                             exchange_symbols.append(exchange_symbol)
                         except Exception:
                             pass  # 静默处理符号转换错误
@@ -575,4 +576,3 @@ class DataReceiver:
                 print(f"⏱️  [{exchange}] 断开连接超时，强制跳过")
             except Exception as e:
                 print(f"⚠️  [{exchange}] 断开连接失败: {e}")
-
