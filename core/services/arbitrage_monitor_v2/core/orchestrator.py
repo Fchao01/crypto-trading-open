@@ -255,6 +255,7 @@ class ArbitrageOrchestrator:
                         type_map = {
                             'edgex': ExchangeType.SPOT,  # EdgeX是现货交易所
                             'lighter': ExchangeType.SPOT,
+                            'lighter_rh': ExchangeType.PERPETUAL,
                             'hyperliquid': ExchangeType.PERPETUAL,
                             'binance': ExchangeType.PERPETUAL,
                             'backpack': ExchangeType.SPOT,

@@ -1255,3 +1255,4 @@ grid_system:
 
 **多交易所策略自动化系统 v2.0.0** - 企业级加密货币自动化交易平台
 
+# crypto-trading-open

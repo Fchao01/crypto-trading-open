@@ -12,6 +12,7 @@ exchanges:
   - edgex
 # - backpack
   - lighter
+# - lighter_rh  # Robinhood Chain Lighter，启用 RH 对冲时取消注释
   - paradex
 
 # 监控的交易对（标准化符号格式）

@@ -1,0 +1,27 @@
+# Lighter Core 与 Robinhood Chain Lighter 监控配置
+# 只监控启动：python3 run_arbitrage_execution_v3.py --unified-config config/arbitrage/arbitrage_unified_lighter_rh_monitor.yaml --monitor-config config/arbitrage/monitor_lighter_rh.yaml
+exchanges:
+  - lighter
+  - lighter_rh
+
+symbols:
+  - BTC-USDC-PERP
+  - ETH-USDC-PERP
+  - SOL-USDC-PERP
+
+thresholds:
+  min_spread_pct: 0.1
+  min_funding_rate_diff: 0.01
+
+websocket:
+  ping_interval: 30
+  reconnect_delay: 5
+  max_reconnect_attempts: 5
+
+performance:
+  analysis_interval_ms: 10
+  ui_refresh_interval_ms: 1000
+
+health_check:
+  interval: 10
+  data_timeout: 30

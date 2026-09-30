@@ -1,15 +1,15 @@
-# Lighter交易所配置文件
+# Robinhood Chain Lighter 独立实例配置文件
 
-exchange_id: "lighter"
-exchange_name: "Lighter"
+exchange_id: "lighter_rh"
+exchange_name: "Lighter Robinhood Chain"
 
 # API配置
 api_config:
   # API端点
-  mainnet_url: "https://mainnet.zklighter.elliot.ai"
-  testnet_url: "https://testnet.zklighter.elliot.ai"
-  ws_mainnet_url: "wss://mainnet.zklighter.elliot.ai/stream"
-  ws_testnet_url: "wss://testnet.zklighter.elliot.ai/stream"
+  mainnet_url: "https://api.rh.lighter.xyz"
+  testnet_url: "https://api.rh-testnet.lighter.xyz"
+  ws_mainnet_url: "wss://api.rh.lighter.xyz/stream"
+  ws_testnet_url: "wss://api.rh-testnet.lighter.xyz/stream"
   
   # 默认使用主网
   testnet: false
@@ -26,12 +26,12 @@ api_config:
     enabled: true
     
     # 📌 密钥已迁移到环境变量（.env 文件）：
-    #    LIGHTER_API_KEY_PRIVATE_KEY - API Key 私钥
-    #    LIGHTER_ACCOUNT_INDEX - 账户索引
-    #    LIGHTER_API_KEY_INDEX - API Key 索引
-    api_key_private_key: ""  # 留空，使用环境变量 LIGHTER_API_KEY_PRIVATE_KEY
-    account_index: 0         # 留空，使用环境变量 LIGHTER_ACCOUNT_INDEX
-    api_key_index: 0         # 留空，使用环境变量 LIGHTER_API_KEY_INDEX
+    #    LIGHTER_RH_API_KEY_PRIVATE_KEY - API Key 私钥
+    #    LIGHTER_RH_ACCOUNT_INDEX - 账户索引
+    #    LIGHTER_RH_API_KEY_INDEX - API Key 索引
+    api_key_private_key: ""  # 留空，使用环境变量 LIGHTER_RH_API_KEY_PRIVATE_KEY
+    account_index: 0         # 留空，使用环境变量 LIGHTER_RH_ACCOUNT_INDEX
+    api_key_index: 0         # 留空，使用环境变量 LIGHTER_RH_API_KEY_INDEX
   
   # SDK安装说明
   sdk_install_command: "pip install git+https://github.com/elliottech/lighter-python.git"
@@ -64,7 +64,7 @@ subscription_mode:
       - type: "volume_threshold"
         min_volume_24h: 1000000  # 最小24小时成交量（USD）
       - type: "quote_currency"
-        currencies: ["USD", "USDT", "USDC"]
+        currencies: ["USDG", "USD", "USDT", "USDC"]
 
 # 符号映射配置
 # ⚠️  已禁用：Lighter API返回的符号就是 BTCUSD、ETHUSD 等（无分隔符）
@@ -134,7 +134,7 @@ margin:
   default_mode: "cross"  # cross 或 isolated
   
   # 默认杠杆
-  default_leverage: 1
+  default_leverage: 5
 
 # 精度配置
 precision:

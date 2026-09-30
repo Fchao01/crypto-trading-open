@@ -56,6 +56,7 @@ class ExchangeFactory:
             from .adapters.binance import BinanceAdapter
             from .adapters.edgex import EdgeXAdapter
             from .adapters.lighter import LighterAdapter
+            from .adapters.lighter_rh import LighterRhAdapter
             from .adapters.paradex import ParadexAdapter
             from .adapters.variational import VariationalAdapter
             from .adapters.grvt import GRVTAdapter
@@ -159,6 +160,29 @@ class ExchangeFactory:
                 exchange_type=ExchangeType.PERPETUAL,
                 name="Lighter",
                 description="Lighter永续合约交易所",
+                supported_features=[
+                    "perpetual_trading", "websocket", "orderbook",
+                    "ticker", "trades", "user_data"
+                ],
+                default_config={
+                    "testnet": False,
+                    "default_leverage": 1,
+                    "enable_websocket": True,
+                    "rate_limits": {
+                        "ticker": {"max_requests": 100, "time_window": 60},
+                        "orderbook": {"max_requests": 100, "time_window": 60},
+                        "trading": {"max_requests": 10, "time_window": 60}
+                    }
+                }
+            )
+
+            # 注册 Robinhood Chain 独立 Lighter 实例（不影响 lighter）
+            self.register_adapter(
+                exchange_id="lighter_rh",
+                adapter_class=LighterRhAdapter,
+                exchange_type=ExchangeType.PERPETUAL,
+                name="Lighter Robinhood Chain",
+                description="Robinhood Chain 上的独立 Lighter 永续合约实例",
                 supported_features=[
                     "perpetual_trading", "websocket", "orderbook",
                     "ticker", "trades", "user_data"

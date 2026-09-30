@@ -97,6 +97,7 @@ class OrchestratorBootstrap:
         type_map = {
             "edgex": ExchangeType.SPOT,
             "lighter": ExchangeType.SPOT,
+            "lighter_rh": ExchangeType.PERPETUAL,
             "hyperliquid": ExchangeType.PERPETUAL,
             "binance": ExchangeType.PERPETUAL,
             "backpack": ExchangeType.SPOT,
@@ -183,12 +184,12 @@ class OrchestratorBootstrap:
         if exchange_name == "backpack" and api_config.get("private_ws_url"):
             exchange_config.private_ws_url = api_config.get("private_ws_url")
 
-        if exchange_name == "lighter" and auth:
+        if exchange_name in ("lighter", "lighter_rh") and auth:
             exchange_config.api_key_private_key = auth.api_key_private_key
             exchange_config.account_index = auth.account_index
             exchange_config.api_key_index = auth.api_key_index
             logger.info(
-                f"🔑 [Lighter] 已加载认证配置: account_index={auth.account_index}, api_key_private_key_len={len(auth.api_key_private_key)}"
+                f"🔑 [{exchange_name}] 已加载认证配置: account_index={auth.account_index}, api_key_private_key_len={len(auth.api_key_private_key)}"
             )
 
         return exchange_config

@@ -26,6 +26,7 @@ from .binance import BinanceAdapter
 from .okx import OKXAdapter
 from .edgex import EdgeXAdapter
 from .lighter import LighterAdapter
+from .lighter_rh import LighterRhAdapter
 from .paradex import ParadexAdapter
 from .variational import VariationalAdapter
 
@@ -36,6 +37,7 @@ __all__ = [
     'OKXAdapter',
     'EdgeXAdapter',
     'LighterAdapter',
+    'LighterRhAdapter',
     'ParadexAdapter',
     'VariationalAdapter',
 ]
